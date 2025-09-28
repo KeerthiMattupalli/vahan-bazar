@@ -17,9 +17,9 @@ function UsedBikes() {
       try {
         const res = await axios.get("http://localhost:5000/api/bikes");
         setBikes(res.data);
-        setLoading(false);
       } catch (err) {
         console.error("Error fetching bikes:", err);
+      } finally {
         setLoading(false);
       }
     };
@@ -32,7 +32,7 @@ function UsedBikes() {
 
   // Client-side filtering
   const filteredBikes = bikes.filter((bike) => {
-    const priceNum = Number(bike.price.replace(/[^0-9]/g, ""));
+    const priceNum = Number(bike.price); // ✅ use number directly
     return (
       (companyFilter ? bike.name.toLowerCase().includes(companyFilter.toLowerCase()) : true) &&
       (nameFilter ? bike.name.toLowerCase().includes(nameFilter.toLowerCase()) : true) &&
@@ -77,12 +77,7 @@ function UsedBikes() {
           placeholder="Min Price"
           value={minPrice}
           onChange={(e) => setMinPrice(e.target.value)}
-          style={{
-            width: "48%",
-            marginRight: "4%",
-            marginBottom: "0.5rem",
-            padding: "0.5rem",
-          }}
+          style={{ width: "48%", marginRight: "4%", marginBottom: "0.5rem", padding: "0.5rem" }}
         />
         <input
           type="number"
@@ -121,17 +116,14 @@ function UsedBikes() {
             }}
           >
             {filteredBikes.map((bike) => {
-              const years =
-                new Date().getFullYear() - new Date(bike.createdAt).getFullYear();
+              const years = bike.createdAt
+                ? new Date().getFullYear() - new Date(bike.createdAt).getFullYear()
+                : 0;
               return (
                 <div
                   key={bike._id}
                   className="card"
-                  style={{
-                    border: "1px solid #ccc",
-                    padding: "1rem",
-                    borderRadius: "8px",
-                  }}
+                  style={{ border: "1px solid #ccc", padding: "1rem", borderRadius: "8px" }}
                 >
                   <img
                     src={bike.image}
