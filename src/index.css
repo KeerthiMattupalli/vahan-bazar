@@ -1,0 +1,122 @@
+/* Global Styles */
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background: #ffffff; /* full white */
+  color: #222;         /* dark text */
+}
+
+/* Links */
+a {
+  color: #ff3b3b; /* red links */
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+/* Navbar */
+nav {
+  background: #000; /* black navbar */
+  color: #ff3b3b;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+nav h1 {
+  margin: 0;
+  font-size: 1.5rem;
+  color: #ff3b3b;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 0;
+}
+nav ul li a {
+  color: #fff;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+nav ul li a:hover {
+  background: #ff3b3b;
+  color: #fff;
+}
+
+/* Footer */
+footer {
+  background: #000;
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+}
+
+/* Containers */
+.container {
+  padding: 1rem 2rem;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  background: #ff3b3b;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: 0.2s;
+}
+.btn:hover {
+  background: #cc0000;
+}
+
+/* Inputs & Select */
+input, select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  color: #222;
+  transition: 0.2s;
+}
+input:focus, select:focus {
+  border: 1px solid #ff3b3b;
+  outline: none;
+  box-shadow: 0 0 5px #ff3b3b;
+}
+
+/* Cards */
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(255, 59, 59, 0.3);
+}
+
+/* Form messages */
+.msg {
+  color: #ff3b3b;
+  margin-top: 0.5rem;
+  font-weight: bold;
+}
+
+/* Text switches (signup/login links) */
+.switch-text {
+  margin-top: 1rem;
+  text-align: center;
+}

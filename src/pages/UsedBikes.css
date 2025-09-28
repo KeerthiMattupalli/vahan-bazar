@@ -1,0 +1,77 @@
+.used-bikes-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.used-bikes-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  background: #000;
+  color: #fff;
+}
+
+.logout-btn {
+  background: #ff3b3b;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.used-bikes-main {
+  display: flex;
+  flex: 1;
+}
+
+.used-bikes-sidebar {
+  width: 250px;
+  padding: 1rem;
+  border-right: 1px solid #ddd;
+  background: #f9f9f9;
+}
+
+.used-bikes-list {
+  flex: 1;
+  padding: 1rem;
+}
+
+.bike-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  background: #fff;
+  color: #222;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 59, 59, 0.3);
+}
+
+.bike-img {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.btn.view-btn {
+  background: #ff3b3b;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+}
+
+.btn.view-btn:hover {
+  background: #cc0000;
+}

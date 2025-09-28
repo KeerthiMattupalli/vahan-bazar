@@ -1,0 +1,11 @@
+.bike-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: flex-start; /* or center if you want */
+}
+
+.bike-card {
+  flex: 1 1 calc(20% - 20px); /* 5 cards per row with gap */
+  box-sizing: border-box;
+}

@@ -1,0 +1,60 @@
+.dashboard {
+  padding: 2rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.summary-cards {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  flex: 1;
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.recent-rentals {
+  list-style: none;
+  padding: 0;
+}
+
+.recent-rentals li {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+/* Make sure the entire page takes full height */
+body, html, #root {
+  height: 100%;
+  margin: 0;
+}
+
+/* Wrap content and footer */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* Content should grow to fill space */
+.main-content {
+  flex: 1;
+}
+
+/* Footer styling */
+footer {
+  background-color: #222;
+  color: white;
+  padding: 1rem;
+  text-align: center;
+}
+
