@@ -10,7 +10,6 @@ export default function VehicleList() {
   const [rentDays, setRentDays] = useState(1);
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Hardcoded bikes with images
   const originalBikes = [
     { id: 1, name: "Hero", type: "Bike", location: "Hyderabad", price: 300 },
     { id: 2, name: "Activa", type: "Scooty", location: "Bangalore", price: 400 },
@@ -27,8 +26,8 @@ export default function VehicleList() {
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
-        // Add images to original bikes
         const imageKeys = Object.keys(images);
+        // Add images to original bikes
         const bikesWithImages = originalBikes.map((bike, i) => ({
           ...bike,
           image: images[imageKeys[i % imageKeys.length]],
@@ -36,13 +35,22 @@ export default function VehicleList() {
 
         // Fetch rented bikes from backend
         const res = await axios.get("http://localhost:5000/api/bikes");
-        const backendBikes = res.data.map((b) => ({
+        const backendBikes = res.data.map((b, i) => ({
           ...b,
-          image: b.image || images[imageKeys[b.id % imageKeys.length]],
+          price: Number(b.price),
+          days: Number(b.days || 1),
+          totalPrice: Number(b.totalPrice || b.price),
+          image: b.image || images[imageKeys[i % imageKeys.length]],
         }));
 
-        // Merge original + backend bikes (avoid duplicates if needed)
-        const allBikes = [...bikesWithImages, ...backendBikes];
+        // Merge original and backend bikes, avoid duplicate original bikes by name
+        const allBikes = [
+          ...bikesWithImages.filter(
+            (ob) => !backendBikes.some((bb) => bb.name === ob.name)
+          ),
+          ...backendBikes,
+        ];
+
         setVehicles(allBikes);
         setLoading(false);
       } catch (err) {
@@ -60,26 +68,33 @@ export default function VehicleList() {
   };
 
   const handleConfirmRent = async () => {
+    if (!activeRentBike) return;
+
     try {
       const rentData = {
-        name: activeRentBike.name,
-        type: activeRentBike.type,
-        location: activeRentBike.location,
-        price: activeRentBike.price,
-        image: activeRentBike.image,
-        days: rentDays,
-        totalPrice: activeRentBike.price * rentDays,
-        createdAt: new Date(),
+        name: String(activeRentBike.name),
+        type: String(activeRentBike.type),
+        location: String(activeRentBike.location),
+        price: Number(activeRentBike.price),
+        image: String(activeRentBike.image),
+        days: Number(rentDays),
+        totalPrice: Number(activeRentBike.price * rentDays),
         user: "Guest",
+        createdAt: new Date(),
       };
 
-      await axios.post("http://localhost:5000/api/bikes", rentData);
-      alert(`You rented ${activeRentBike.name} for ${rentDays} day(s). Total Price: ₹${rentData.totalPrice}`);
+      console.log("Sending to backend:", rentData);
+
+      await axios.post("http://localhost:5000/api/bikes", rentData, {
+        headers: { "Content-Type": "application/json" },
+      });
+
+      alert(
+        `You rented ${activeRentBike.name} for ${rentDays} day(s). Total Price: ₹${rentData.totalPrice}`
+      );
+
       setActiveRentBike(null);
-
-      // Refresh list including new rented bike
       setVehicles((prev) => [...prev, rentData]);
-
     } catch (err) {
       console.error("Error renting bike:", err);
       alert("Failed to rent bike. Please try again.");
@@ -94,7 +109,8 @@ export default function VehicleList() {
     v.location.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  if (loading) return <p style={{ textAlign: "center", marginTop: "2rem" }}>Loading vehicles...</p>;
+  if (loading)
+    return <p style={{ textAlign: "center", marginTop: "2rem" }}>Loading vehicles...</p>;
 
   return (
     <div className="vehicle-section">
@@ -108,8 +124,8 @@ export default function VehicleList() {
       </div>
 
       <div className="vehicle-list">
-        {filteredVehicles.map((v) => (
-          <div key={v._id || v.id} className="vehicle-card">
+        {filteredVehicles.map((v, index) => (
+          <div key={v._id || v.id || `bike-${index}`} className="vehicle-card">
             <img src={v.image} alt={v.name} className="vehicle-img" />
             <h3>{v.name}</h3>
             <p className="vehicle-type">{v.type}</p>
